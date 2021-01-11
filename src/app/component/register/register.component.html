@@ -1,0 +1,36 @@
+<div class="col-lg-6">
+  <div class="text-center">
+    <h1 class="h4 text-gray-900 mb-4">Register</h1>
+  </div>
+
+  <form method="POST">
+    <div class="form-group">
+      <input id="email" placeholder="Enter Your email"
+             type="email"
+             class="form-control form-control-user  is-invalid @enderror"
+             name="email" required autocomplete="email" autofocus [(ngModel)]="email">
+    </div>
+    <div class="form-group">
+      <input id="username" placeholder="Enter Your Username"
+             type="text"
+             class="form-control form-control-user  is-invalid @enderror"
+             name="username" required autocomplete="username" autofocus [(ngModel)]="username">
+    </div>
+    <div class="form-group">
+      <input id="password" type="password"
+             placeholder="Enter Your Password"
+             class="form-control form-control-user  is-invalid @enderror"
+             name="password" required autocomplete="current-password" [(ngModel)]="password">
+    </div>
+
+    <div class="form-group pl--4">
+      <button type="submit" class="btn btn-primary"
+              style="width: 100%" (click)="register()">Register
+      </button>
+      <a class="btn btn-link" style="width: 100%" (click)="movedOnLogin()">Login</a>
+    </div>
+
+
+  </form>
+  <hr>
+</div>
