@@ -29,6 +29,8 @@ export class ViewPostComponent implements OnInit {
       text: new FormControl('', Validators.required)
     });
     this.commentPayload = {
+      createdDate: '',
+      userName: '',
       text: '',
       postId: this.postId
     };
@@ -41,7 +43,7 @@ export class ViewPostComponent implements OnInit {
 
   postComment() {
     this.commentPayload.text = this.commentForm.get('text').value;
-    console.log(this.commentPayload);
+    // console.log(this.commentPayload);
     this.commentService.postComment(this.commentPayload).subscribe(data => {
       this.commentForm.get('text').setValue('');
       this.getCommentsForPost();

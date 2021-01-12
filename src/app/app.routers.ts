@@ -15,10 +15,10 @@ export const appRoutes: Routes = [
   {path: 'login', component: LoginComponent},
   {path: 'register', component: RegisterComponent},
   {path: 'home', component: HomeComponent},
-  {path: 'create-subreddit', component: CreateSubredditComponent},
+  {path: 'create-subreddit', component: CreateSubredditComponent,canActivate:[AuthGuard]},
   {path: 'list-subreddit', component: ListSubredditComponent},
   {path: 'view-post/:id', component: ViewPostComponent, canActivate: [AuthGuard]},
   {path: 'user-profile/:name', component: UserProfileComponent, canActivate: [AuthGuard]},
-  {path: 'create-post', component: CreatePostComponent},
+  {path: 'create-post', component: CreatePostComponent,canActivate:[AuthGuard]},
 
 ];

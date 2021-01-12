@@ -4,9 +4,9 @@ import {HttpClient} from '@angular/common/http';
 import {Observable, throwError} from 'rxjs';
 import {LoginRequestPayload} from '../dto/login-request.payload';
 import {LoginResponse} from '../dto/login-response.payload';
-import {map} from 'rxjs/operators';
+import {map, tap} from 'rxjs/operators';
 
-// import {LocalStorageService} from 'ngx-webstorage';
+import {LocalStorageService} from 'ngx-webstorage';
 
 
 @Injectable({
@@ -72,6 +72,19 @@ export class AuthServiceService {
   // tslint:disable-next-line:typedef
   getJwtToken(): string {
     return localStorage.getItem('authenticationToken') as string;
+  }
+
+  refreshToken() {
+    return this.httpClient.post<LoginResponse>('http://localhost:8082/api/auth/refresh/token',
+      this.refreshTokenPayload)
+      .pipe(tap(response => {
+    localStorage.removeItem('authenticationToken');
+        localStorage.removeItem('expiresAt');
+
+        localStorage.setItem('authenticationToken', response.authenticationToken);
+        // @ts-ignore
+        localStorage.setItem('expiresAt', response.expiresAt);
+      }));
   }
 
   checkLogin(): boolean {

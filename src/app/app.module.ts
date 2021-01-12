@@ -8,7 +8,7 @@ import {appRoutes} from './app.routers';
 import {LoginComponent} from './component/login/login.component';
 import {RegisterComponent} from './component/register/register.component';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {HttpClientModule} from '@angular/common/http';
+import {HTTP_INTERCEPTORS, HttpClientModule} from '@angular/common/http';
 import {LocalStorageService} from 'ngx-webstorage';
 import {HeaderComponent} from './component/header/header.component';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
@@ -24,6 +24,7 @@ import { CreatePostComponent } from './component/post/create-post/create-post.co
 import { ViewPostComponent } from './component/post/view-post/view-post.component';
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import {TokenInterceptor} from './token-interceptor';
 
 
 @NgModule({
@@ -53,11 +54,17 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
     BrowserAnimationsModule,
     ToastrModule.forRoot(),
     ReactiveFormsModule,
-    FontAwesomeModule
+    FontAwesomeModule,
 
 
   ],
-  providers: [],
+  providers: [
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: TokenInterceptor,
+      multi: true
+    }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {
