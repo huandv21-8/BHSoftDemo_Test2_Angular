@@ -6,7 +6,6 @@ import {LoginRequestPayload} from '../dto/login-request.payload';
 import {LoginResponse} from '../dto/login-response.payload';
 import {map, tap} from 'rxjs/operators';
 
-import {LocalStorageService} from 'ngx-webstorage';
 
 
 @Injectable({
@@ -24,6 +23,7 @@ export class AuthServiceService {
   };
 
   constructor(private httpClient: HttpClient) {
+
   }
 
 
@@ -46,10 +46,12 @@ export class AuthServiceService {
   }
 
   logout() {
-    this.httpClient.post('http://localhost:8082/api/auth/logout', this.refreshTokenPayload,
-      {responseType: 'text'})
+   this.refreshTokenPayload.username = this.getUsername();
+   this.refreshTokenPayload.refreshToken = this.getRefreshToken();
+    // console.log(this.refreshTokenPayload);
+    this.httpClient.post('http://localhost:8082/api/auth/logout', this.refreshTokenPayload, {responseType: 'text'})
       .subscribe(data => {
-        console.log(data);
+        // console.log(data);
       }, error => {
         throwError(error);
       });

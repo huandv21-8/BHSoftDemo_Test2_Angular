@@ -29,7 +29,7 @@ export class HeaderComponent implements OnInit, AfterViewChecked {
   logout() {
     this.auth.logout();
     this.isLoggedIn = false;
-    console.log('logout: ' + this.isLoggedIn);
+    // console.log('logout: ' + this.isLoggedIn);
     // this.username = '';
   }
 
