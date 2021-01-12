@@ -1,13 +1,13 @@
 export class  PostModel {
-  id: number;
+  id?: number;
   postName: string;
   url: string;
   description: string;
   voteCount: number;
-  userName?: string;
+  userName: string;
   subredditName: string;
   commentCount: number;
   duration: string;
-  upVote: boolean;
-  downVote: boolean;
+  upVote?: boolean;
+  downVote?: boolean;
 }

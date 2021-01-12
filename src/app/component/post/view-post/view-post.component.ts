@@ -37,6 +37,16 @@ export class ViewPostComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.post = {
+      postName : '',
+      url : '',
+      description : '',
+      voteCount : null,
+      userName : '',
+      subredditName : '',
+      commentCount : null,
+      duration : '',
+    };
     this.getPostById();
     this.getCommentsForPost();
   }
@@ -49,7 +59,7 @@ export class ViewPostComponent implements OnInit {
       this.getCommentsForPost();
     }, error => {
       throwError(error);
-    })
+    });
   }
 
   // tslint:disable-next-line:typedef
