@@ -1,6 +1,7 @@
 <div class="col-lg-6">
   <div class="text-center">
     <h1 class="h4 text-gray-900 mb-4">Log in</h1>
+    <p *ngIf="!mess" [ngStyle]="{'color': 'red'}">Please enter all fields completely</p>
   </div>
 
   <form method="POST">

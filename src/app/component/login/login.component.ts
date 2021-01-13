@@ -2,7 +2,7 @@ import {Component, OnInit} from '@angular/core';
 import {Router} from '@angular/router';
 import {LoginRequestPayload} from '../../dto/login-request.payload';
 import {AuthServiceService} from '../../service/auth-service.service';
-// import {EventEmitter} from 'events';
+import {ToastrService} from 'ngx-toastr';
 
 @Component({
   selector: 'app-login',
@@ -15,10 +15,11 @@ export class LoginComponent implements OnInit {
   // tslint:disable-next-line:no-output-rename
   // @Output('username') sendUsername = new EventEmitter<string>();
 
-  username?: string;
-  password?: string;
+  username: string;
+  password: string;
+  mess: boolean;
 
-  constructor(private router: Router, private auth: AuthServiceService) {
+  constructor(private router: Router, private auth: AuthServiceService, private toastr: ToastrService) {
     this.loginRequest = {
       username: '',
       password: ''
@@ -26,24 +27,28 @@ export class LoginComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.mess = true;
   }
 
   // tslint:disable-next-line:typedef
   login() {
-    if (this.username != null && this.password != null) {
+    if (this.username == null && this.password == null) {
+      this.mess = false;
+    }
+    if (this.mess) {
       this.loginRequest.username = this.username;
       this.loginRequest.password = this.password;
+
+      // console.log(this.loginRequest);
+      this.auth.login(this.loginRequest).subscribe(data => {
+        this.router.navigateByUrl('');
+        this.toastr.error('login success');
+        console.log('dang nhap thang cong:');
+      }, error => {
+        // console.log('loi roi');
+        this.toastr.error('login Failed! Please try again');
+      });
     }
-    // console.log(this.loginRequest);
-    this.auth.login(this.loginRequest).subscribe(data => {
-      this.router.navigateByUrl('');
-      // this.sendUsername.emit(this.username);
-
-      console.log('dang nhap thang cong:' );
-    }, error => {
-      console.log('loi roi');
-    });
-
 
   }
 

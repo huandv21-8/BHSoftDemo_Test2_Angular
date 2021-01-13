@@ -77,8 +77,7 @@ export class AuthServiceService {
   }
 
   refreshToken() {
-    return this.httpClient.post<LoginResponse>('http://localhost:8082/api/auth/refresh/token',
-      this.refreshTokenPayload)
+    return this.httpClient.post<LoginResponse>('http://localhost:8082/api/auth/refresh/token', this.refreshTokenPayload)
       .pipe(tap(response => {
         localStorage.removeItem('authenticationToken');
         localStorage.removeItem('expiresAt');
