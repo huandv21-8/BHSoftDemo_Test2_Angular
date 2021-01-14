@@ -12,6 +12,7 @@ import {throwError} from "rxjs";
 export class CreateSubredditComponent implements OnInit {
   title: string;
   description: string;
+  error: string;
 
   subreddit: SubredditModel;
 
@@ -23,6 +24,7 @@ export class CreateSubredditComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.error='';
   }
 
   // tslint:disable-next-line:typedef
@@ -40,7 +42,7 @@ export class CreateSubredditComponent implements OnInit {
       console.log(data);
       this.router.navigateByUrl('/home');
     }, error => {
-      throwError(error);
+this.error = "Please enter all fields";
     });
 
   }

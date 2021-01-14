@@ -17,9 +17,9 @@ export class CreatePostComponent implements OnInit {
   createPostForm: FormGroup;
   postPayload: CreatePostPayload;
   subreddits: Array<SubredditModel>;
+  error: string;
 
-  constructor(private router: Router, private postService: PostService,
-              private subredditService: SubredditService) {
+  constructor(private router: Router, private postService: PostService, private subredditService: SubredditService) {
     this.postPayload = {
       postName: '',
       url: '',
@@ -29,6 +29,7 @@ export class CreatePostComponent implements OnInit {
   }
 
   ngOnInit() {
+    this.error = '';
     this.createPostForm = new FormGroup({
       postName: new FormControl('', Validators.required),
       subredditName: new FormControl('', Validators.required),
@@ -53,7 +54,7 @@ export class CreatePostComponent implements OnInit {
     this.postService.createPost(this.postPayload).subscribe((data) => {
       this.router.navigateByUrl('home');
     }, error => {
-      throwError(error);
+      this.error = "Please enter all fields";
     });
   }
 
