@@ -58,7 +58,8 @@ export class TokenInterceptor implements HttpInterceptor {
     } else {
       // Nếu isTokenRefreshing là true, chúng ta sẽ đợi cho đến khi refreshTokenSubject có giá trị không phải null
       // có nghĩa là mã thông báo mới đã sẵn sàng và chúng tôi có thể thử lại yêu cầu một lần nữa
-      return this.refreshTokenSubject.pipe(filter(result => result !== null), take(1),
+      return this.refreshTokenSubject.pipe(
+        filter(result => result !== null), take(1),
         switchMap((res) => {
           return next.handle(this.addToken(req, this.authService.getJwtToken()));
         })

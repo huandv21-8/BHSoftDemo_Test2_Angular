@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
   username: string;
   password: string;
   mess: boolean;
+  error: string;
 
   constructor(private router: Router, private auth: AuthServiceService, private toastr: ToastrService) {
     this.loginRequest = {
@@ -28,6 +29,7 @@ export class LoginComponent implements OnInit {
 
   ngOnInit(): void {
     this.mess = true;
+    this.error = '';
   }
 
   // tslint:disable-next-line:typedef
@@ -46,7 +48,9 @@ export class LoginComponent implements OnInit {
         console.log('dang nhap thang cong:');
       }, error => {
         // console.log('loi roi');
-        this.toastr.error('login Failed! Please try again');
+        // this.mess = false;
+        this.error = 'login Failed! Please try again';
+        // this.toastr.error('login Failed! Please try again');
       });
     }
 

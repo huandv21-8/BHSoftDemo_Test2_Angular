@@ -32,8 +32,8 @@ export class AuthServiceService {
   }
 
   login(loginRequestPayload: LoginRequestPayload): Observable<boolean> {
-    return this.httpClient.post<LoginResponse>('http://localhost:8082/api/auth/login',
-      loginRequestPayload).pipe(map(({authenticationToken, expiresAt, refreshToken, username}) => {
+    return this.httpClient.post<LoginResponse>('http://localhost:8082/api/auth/login', loginRequestPayload)
+      .pipe(map(({authenticationToken, expiresAt, refreshToken, username}) => {
 
       localStorage.setItem('authenticationToken', authenticationToken);
       localStorage.setItem('username', username);
@@ -50,11 +50,7 @@ export class AuthServiceService {
    this.refreshTokenPayload.refreshToken = this.getRefreshToken();
     // console.log(this.refreshTokenPayload);
     this.httpClient.post('http://localhost:8082/api/auth/logout', this.refreshTokenPayload, {responseType: 'text'})
-      .subscribe(data => {
-        // console.log(data);
-      }, error => {
-        throwError(error);
-      });
+      .subscribe(data => {}, error => {throwError(error);});
 
     localStorage.removeItem('authenticationToken');
     localStorage.removeItem('username');
