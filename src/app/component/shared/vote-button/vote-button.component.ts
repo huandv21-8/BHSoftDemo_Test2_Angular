@@ -1,4 +1,4 @@
-import {Component, Input, OnInit} from '@angular/core';
+import {Component, Input, OnInit, AfterViewChecked} from '@angular/core';
 import {PostModel} from '../../../dto/post-model';
 import {VotePayload} from '../../../dto/vote-payload';
 import {VoteService} from '../../../service/vote.service';
@@ -15,7 +15,7 @@ import {throwError} from 'rxjs';
   templateUrl: './vote-button.component.html',
   styleUrls: ['./vote-button.component.scss']
 })
-export class VoteButtonComponent implements OnInit {
+export class VoteButtonComponent implements OnInit, AfterViewChecked {
 
 
   @Input() post: PostModel;
@@ -28,8 +28,10 @@ export class VoteButtonComponent implements OnInit {
 
   constructor(private voteService: VoteService,
               private authService: AuthServiceService,
-              private postService: PostService, private toastr: ToastrService) {
-    // console.log(PostModel);
+              private postService: PostService) {
+
+    // console.log(this.post);
+    // this.post.id = null;
 
     this.votePayload = {
       voteType: undefined,
@@ -38,8 +40,12 @@ export class VoteButtonComponent implements OnInit {
     this.authService.loggedIn.subscribe((data: boolean) => this.isLoggedIn = data);
   }
 
-  ngOnInit(): void {
+  ngAfterViewChecked(): void {
     // this.updateVoteDetails();
+  }
+
+  ngOnInit(): void {
+    this.updateVoteDetails();
   }
 
   // tslint:disable-next-line:typedef
@@ -62,17 +68,14 @@ export class VoteButtonComponent implements OnInit {
     this.voteService.vote(this.votePayload).subscribe(() => {
       this.updateVoteDetails();
     }, error => {
-      this.toastr.error(error.error.message);
-      throwError(error);
+      alert('You have already vote for this post');
     });
   }
 
   // tslint:disable-next-line:typedef
   private updateVoteDetails() {
-    if (this.post.id == null) {
       this.postService.getPost(this.post.id).subscribe(post => {
         this.post = post;
       });
     }
-  }
 }
