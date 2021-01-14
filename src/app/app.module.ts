@@ -25,6 +25,7 @@ import { ViewPostComponent } from './component/post/view-post/view-post.componen
 import { UserProfileComponent } from './component/user-profile/user-profile.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import {TokenInterceptor} from './token-interceptor';
+import { ViewSubredditComponent } from './component/subreddit/view-subreddit/view-subreddit.component';
 
 
 @NgModule({
@@ -43,6 +44,7 @@ import {TokenInterceptor} from './token-interceptor';
     CreatePostComponent,
     ViewPostComponent,
     UserProfileComponent,
+    ViewSubredditComponent,
 
   ],
   imports: [

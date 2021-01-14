@@ -1,0 +1,18 @@
+<div class="container">
+  <div class="row">
+
+    <div class="col-md-9">
+      <div class="row post">
+        <div class="col-md-11">
+          <h3>Name Subreddit: <a routerLink="post.url" class="post-title">{{subreddit.name}}</a></h3>
+          <div>
+            Description: <p class="post-text" [innerHtml]="subreddit.description"></p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-md-9">
+      <app-post-tile [posts]="posts"></app-post-tile>
+    </div>
+  </div>
+</div>
