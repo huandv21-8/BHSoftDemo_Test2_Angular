@@ -38,7 +38,6 @@ export class ViewSubredditComponent implements OnInit {
   private getSub() {
     this.subredditService.getSubredditById(this.idSub).subscribe(data => {
       this.subreddit = data;
-      // console.log(data);
     }, error => {
       throwError(error);
     });

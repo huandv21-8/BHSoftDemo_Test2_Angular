@@ -6,6 +6,7 @@ import {PostService} from '../../../service/post.service';
 import {ActivatedRoute, Router} from '@angular/router';
 import {CommentPayload} from '../../../dto/comment.payload';
 import {CommentService} from '../../../service/comment.service';
+import {CommentDeleteTs} from '../../../dto/comment.delete.ts';
 
 @Component({
   selector: 'app-view-post',
@@ -18,12 +19,19 @@ export class ViewPostComponent implements OnInit {
   postId: number;
   post: PostModel;
   commentForm: FormGroup;
+  commentDelete: CommentDeleteTs;
   commentPayload: CommentPayload;
   comments: CommentPayload[];
+  isCheckDelete: boolean;
 
-  constructor(private postService: PostService, private activateRoute: ActivatedRoute,
-              private router: Router, private commentService: CommentService) {
+
+  constructor(private postService: PostService,
+              private activateRoute: ActivatedRoute,
+              private router: Router,
+              private commentService: CommentService,
+              ) {
     this.postId = this.activateRoute.snapshot.params.id;
+    this.isCheckDelete = false;
 
     this.commentForm = new FormGroup({
       text: new FormControl('', Validators.required)
@@ -34,18 +42,23 @@ export class ViewPostComponent implements OnInit {
       text: '',
       postId: this.postId
     };
+
+    this.commentDelete = {
+      commentId: null,
+      username: ''
+    };
   }
 
   ngOnInit(): void {
     this.post = {
-      postName : '',
-      url : '',
-      description : '',
-      voteCount : null,
-      userName : '',
-      subredditName : '',
-      commentCount : null,
-      duration : '',
+      postName: '',
+      url: '',
+      description: '',
+      voteCount: null,
+      userName: '',
+      subredditName: '',
+      commentCount: null,
+      duration: '',
     };
     this.getPostById();
     this.getCommentsForPost();
@@ -65,7 +78,6 @@ export class ViewPostComponent implements OnInit {
   // tslint:disable-next-line:typedef
   private getPostById() {
     this.postService.getPost(this.postId).subscribe(data => {
-
       this.post = data;
       // console.log(data);
     }, error => {
@@ -81,6 +93,27 @@ export class ViewPostComponent implements OnInit {
     }, error => {
       throwError(error);
     });
+  }
+
+  deleteComment(commentId: number, userName: string) {
+    this.commentDelete.username = userName;
+    this.commentDelete.commentId = commentId;
+    if (window.confirm('You may want to delete??')){
+      this.commentService.deleteComment(this.commentDelete).subscribe(()=>{
+        console.log("delete success");
+      });
+    }
+  }
+  deletePost(id: number){
+    if (window.confirm('You may want to delete??')){
+      this.postService.deletePost(id).subscribe((data)=>{
+       if (data){
+         this.router.navigateByUrl('home');
+       }else {
+         alert('You do not have the right to delete this post !')
+       }
+      });
+    }
   }
 
 }

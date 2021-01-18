@@ -31,4 +31,7 @@ export class PostService {
   getAllPostsByUser(name: string): Observable<PostModel[]> {
     return this.http.get<PostModel[]>('http://localhost:8082/api/post/by-user/' + name);
   }
+  deletePost(id: number){
+    return this.http.delete<any>('http://localhost:8082/api/post/delete/'+ id);
+  }
 }

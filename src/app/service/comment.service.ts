@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {Observable} from "rxjs";
 import {CommentPayload} from "../dto/comment.payload";
+import {CommentDeleteTs} from '../dto/comment.delete.ts';
 
 @Injectable({
   providedIn: 'root'
@@ -9,7 +10,8 @@ import {CommentPayload} from "../dto/comment.payload";
 export class CommentService {
 
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {
+  }
 
   getAllCommentsForPost(postId: number): Observable<CommentPayload[]> {
     return this.httpClient.get<CommentPayload[]>('http://localhost:8082/api/comment/by-post/' + postId);
@@ -22,5 +24,9 @@ export class CommentService {
   // tslint:disable-next-line:typedef
   getAllCommentsByUser(name: string) {
     return this.httpClient.get<CommentPayload[]>('http://localhost:8082/api/comment/by-user/' + name);
+  }
+
+  deleteComment(deleteComments: CommentDeleteTs) {
+    return this.httpClient.post<any>('http://localhost:8082/api/comment/delete', deleteComments);
   }
 }

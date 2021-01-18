@@ -1,5 +1,5 @@
 export class CommentPayload {
-  // id?: number;
+  id?: number;
   text: string;
   postId: number;
   userName: string;

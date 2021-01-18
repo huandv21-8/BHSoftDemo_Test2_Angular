@@ -24,7 +24,7 @@ export class VoteButtonComponent implements OnInit, AfterViewChecked {
   faArrowDown = faArrowDown;
   upvoteColor: string;
   downvoteColor: string;
-  isLoggedIn: boolean;
+  // isLoggedIn: boolean;
 
   constructor(private voteService: VoteService,
               private authService: AuthServiceService,
@@ -37,7 +37,7 @@ export class VoteButtonComponent implements OnInit, AfterViewChecked {
       voteType: undefined,
       postId: undefined
     };
-    this.authService.loggedIn.subscribe((data: boolean) => this.isLoggedIn = data);
+    // this.authService.loggedIn.subscribe((data: boolean) => this.isLoggedIn = data);
   }
 
   ngAfterViewChecked(): void {
